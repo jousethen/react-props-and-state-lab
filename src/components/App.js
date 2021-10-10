@@ -27,7 +27,6 @@ class App extends React.Component {
 
   findPets = () => {
     let fetchURL = "";
-    let pets;
     switch (this.state.filters.type) {
       case 'all': fetchURL = '/api/pets'
         break;
@@ -48,7 +47,13 @@ class App extends React.Component {
   }
 
   adoptPet = (petID) => {
-    let pet = this.state.pets.filter(p => { return p.id == petID })
+    let petIndex = this.state.pets.findIndex(p => { return p.id === petID })
+    let petsCopy = this.state.pets;
+    petsCopy[petIndex].isAdopted = true;
+
+    this.setState({
+      pets: petsCopy
+    })
   }
 
   render() {
